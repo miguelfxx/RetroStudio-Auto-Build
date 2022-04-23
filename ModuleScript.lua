@@ -19,9 +19,10 @@ local RemoteEvents = ReplicatedStorage.RemoteEvents
 
 local CreateObjectEvent = RemoteFunctions.CreateObject
 local ObjectPropertyChangeRequestEvent = RemoteEvents.ObjectPropertyChangeRequested
+local CheckpointEvent = RemoteEvents.ChangeHistoryInteractionRequested
 
 local AutoBuildGui, MainFrame, TitleLabel, ModelBox, NameBox, StartButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/UI.lua"))()()
-local Properties = HttpService:JSONDecode(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/Properties.lua"))
+local Properties = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/Properties.lua"))()
 
 local function CreateNewInstance(ClassName: string, Parent: Instance)
 	local Success, Result = pcall(CreateObjectEvent.InvokeServer, CreateObjectEvent, ClassName, Parent)
@@ -32,12 +33,15 @@ local function SetInstanceProperty(Object: Instance, PropertyName: string, NewVa
 	ObjectPropertyChangeRequestEvent:FireServer(Object, PropertyName, NewValue)
 end
 
-local function ScanModel(Model, ServerParent)
+local function SetCheckpoint()
+	CheckpointEvent:FireServer("AddCheckpoint")
+end
+
+local function ScanModel(Model: Instance, ServerParent?: Instance)
 	for _,Child in ipairs(Model:GetChildren()) do
 		local Properties = Properties[Child.ClassName]
 		
 		if not Properties then
-			warn(Child.ClassName.." is invalid!")
 			continue
 		end
 
@@ -47,12 +51,17 @@ local function ScanModel(Model, ServerParent)
 		end
 
 		local NewObject = CreateNewInstance(Child.ClassName, ServerParent)
+		local IsAnchored = Child:GetAttribute("Anchored")
+
+		if IsAnchored ~= nil then
+			Child.Anchored = IsAnchored
+		end
 
 		for _,Property in ipairs(Properties) do
-			pcall(function()
-				SetInstanceProperty(NewObject, Property, Child[Property])
-			end)
+			SetInstanceProperty(NewObject, Property, Child[Property])
 		end
+
+		Child.Anchored = true
 
 		ScanModel(Child, NewObject)
 	end
@@ -66,7 +75,8 @@ local function GetAssets(AssetId: string | number)
 	Model = Model[1]
 
 	for _,Object in ipairs(Model:GetDescendants()) do
-		if Object:IsA("BasePart") then
+		if Object["Anchored"] ~= nil then
+			Object:SetAttribute("Anchored", Object.Anchored)
 			Object.Anchored = true
 		end
 	end
@@ -81,7 +91,9 @@ local function Start(AssetId: string | number, ModelName: string)
 
 	Model.Name = ModelName
 
+	SetCheckpoint()
 	ScanModel(Model)
+	SetCheckpoint()
 
 	Model:Destroy()
 end

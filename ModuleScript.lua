@@ -80,7 +80,7 @@ local function GetAssets(AssetId: string | number)
 			Object.Anchored = true
 		end)
 	end
-z
+
 	return Model
 end
 

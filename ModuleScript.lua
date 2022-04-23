@@ -27,6 +27,11 @@ local CreatedInstances = 0
 local function CreateNewInstance(ClassName: string, Parent: Instance)
 	local Success, Result = pcall(CreateObjectEvent.InvokeServer, CreateObjectEvent, ClassName, Parent)
 	CreatedInstances += 1
+
+	if not Success then
+		warn(Result)
+	end
+
 	return Result
 end
 
@@ -41,15 +46,15 @@ end
 local function ScanModel(Model: Instance, ServerParent: Instance?)
 	if not ServerParent then
 		ServerParent = CreateNewInstance(Model.ClassName, workspace)
-		SetInstanceProperty(ServerParent, "Name", Model.Name)
+		task.spawn(SetInstanceProperty, ServerParent, "Name", Model.Name)
 	end
 
 	for _,Child in ipairs(Model:GetChildren()) do
-		task.spawn(function()
+		--task.spawn(function()
 			local Properties = Properties[Child.ClassName]
 			
 			if not Properties then
-				return
+				continue
 			end
 
 			local NewObject = CreateNewInstance(Child.ClassName, ServerParent)
@@ -59,12 +64,12 @@ local function ScanModel(Model: Instance, ServerParent: Instance?)
 				Child.Anchored = IsAnchored
 			end
 
-			for _,Property in ipairs(Properties) do
-				SetInstanceProperty(NewObject, Property, Child[Property])
-			end
-
 			if Child:IsA("BasePart") then
 				SetInstanceProperty(NewObject, "FormFactor", "Custom")
+			end
+
+			for _,Property in ipairs(Properties) do
+				SetInstanceProperty(NewObject, Property, Child[Property])
 			end
 
 			if IsAnchored ~= nil then
@@ -72,7 +77,7 @@ local function ScanModel(Model: Instance, ServerParent: Instance?)
 			end
 
 			ScanModel(Child, NewObject)
-		end)
+		--end)
 	end
 end
 
@@ -102,9 +107,9 @@ local function Start(AssetId: string | number, ModelName: string)
 	local StartTime = tick()
 	CreatedInstances = 0
 
-	SetCheckpoint()
+	--SetCheckpoint()
 	ScanModel(Model)
-	SetCheckpoint()
+	--SetCheckpoint()
 	warn('Finished! Took ' .. tick() - StartTime .. ' seconds to create '.. tostring(CreatedInstances) .. ' instances.')
 	Model:Destroy()
 end

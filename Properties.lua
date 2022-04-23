@@ -268,6 +268,15 @@ local Properties = {
 		"Color3",
 		"PantsTemplate"
 	},
+	["SpotLight"] = {
+		"Angle",
+		"Brightness",
+		"Color",
+		"Enabled",
+		"Face",
+		"Range",
+		"Shadows"
+	},
 	["Motor"] = {
 		"CurrentAngle",
 		"DesiredAngle",

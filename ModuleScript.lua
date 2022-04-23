@@ -39,34 +39,40 @@ local function SetCheckpoint()
 end
 
 local function ScanModel(Model: Instance, ServerParent: Instance?)
+	if not ServerParent then
+		ServerParent = CreateNewInstance(Model.ClassName, workspace)
+		SetInstanceProperty(ServerParent, "Name", Model.Name)
+	end
+
 	for _,Child in ipairs(Model:GetChildren()) do
-		local Properties = Properties[Child.ClassName]
-		
-		if not Properties then
-			continue
-		end
+		task.spawn(function()
+			local Properties = Properties[Child.ClassName]
+			
+			if not Properties then
+				return
+			end
 
-		if not ServerParent then
-			ServerParent = CreateNewInstance(Model.ClassName, workspace)
-			SetInstanceProperty(ServerParent, "Name", Model.Name)
-		end
+			local NewObject = CreateNewInstance(Child.ClassName, ServerParent)
+			local IsAnchored = Child:GetAttribute("Anchored")
 
-		local NewObject = CreateNewInstance(Child.ClassName, ServerParent)
-		local IsAnchored = Child:GetAttribute("Anchored")
+			if IsAnchored ~= nil then
+				Child.Anchored = IsAnchored
+			end
 
-		if IsAnchored ~= nil then
-			Child.Anchored = IsAnchored
-		end
+			for _,Property in ipairs(Properties) do
+				SetInstanceProperty(NewObject, Property, Child[Property])
+			end
 
-		for _,Property in ipairs(Properties) do
-			SetInstanceProperty(NewObject, Property, Child[Property])
-		end
+			if Child:IsA("BasePart") then
+				SetInstanceProperty(NewObject, "FormFactor", "Custom")
+			end
 
-		if IsAnchored ~= nil then
-			Child.Anchored = true
-		end
+			if IsAnchored ~= nil then
+				Child.Anchored = true
+			end
 
-		ScanModel(Child, NewObject)
+			ScanModel(Child, NewObject)
+		end)
 	end
 end
 

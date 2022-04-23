@@ -20,44 +20,8 @@ local RemoteEvents = ReplicatedStorage.RemoteEvents
 local CreateObjectEvent = RemoteFunctions.CreateObject
 local ObjectPropertyChangeRequestEvent = RemoteEvents.ObjectPropertyChangeRequested
 
-local AutoBuildGui, MainFrame, TitleLabel, ModelBox, NameBox, StartButton = loadstring(game:HttpGet("https://pastebin.com/raw/iqqyYSsa"))()()
-local Properties = HttpService:JSONDecode(game:HttpGet("https://pastebin.com/raw/TFSU2s5e"))
-local BlacklistedProperties = {}
-
-function fetchProperties(classToCollect: string)
-	local myProps: {string} = {}
-	local apiDumpClasses = HttpService:JSONDecode(game:HttpGet("https://raw.githubusercontent.com/Mancraze/RobloxInstancesProperties/main/Text")).Classes
-	local found = false
-
-	repeat found = false
-		for _, class in pairs(apiDumpClasses) do
-			if class.Name ~= classToCollect then continue end
-			for _, member in pairs(class.Members) do
-				if member.MemberType == "Property" then
-					table.insert(myProps,member.Name)
-				end
-			end
-			classToCollect = class.Superclass
-			found = true
-		end
-		assert(found,"Class not found: "..classToCollect)
-	until classToCollect == "<<<ROOT>>>"
-
-	return myProps
-end
-
-
-local function GetProperties(Object: Instance)
-	local ClassName = Object.ClassName
-	
-	if Properties[ClassName] then
-		return Properties[ClassName]
-	end
-	
-	local Properties = fetchProperties(ClassName)
-	Properties[ClassName] = Properties
-	return Properties
-end
+local AutoBuildGui, MainFrame, TitleLabel, ModelBox, NameBox, StartButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/UI.lua"))()()
+local Properties = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/Properties.lua"))()()
 
 local function CreateNewInstance(ClassName: string, Parent: Instance)
 	local Success, Result = pcall(CreateObjectEvent.InvokeServer, CreateObjectEvent, ClassName, Parent)
@@ -70,7 +34,7 @@ end
 
 local function ScanModel(Model, ServerParent)
 	for _,Child in ipairs(Model:GetChildren()) do
-		local Properties = GetProperties(Child)
+		local Properties = Properties[Child.ClassName]
 		
 		if not Properties then
 			warn(Child.ClassName.." is invalid!")
@@ -87,7 +51,6 @@ local function ScanModel(Model, ServerParent)
 		for _,Property in ipairs(Properties) do
 			pcall(function()
 				SetInstanceProperty(NewObject, Property, Child[Property])
-				print(Property)
 			end)
 		end
 

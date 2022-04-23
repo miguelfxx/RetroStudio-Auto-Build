@@ -37,7 +37,7 @@ local function SetCheckpoint()
 	CheckpointEvent:FireServer("AddCheckpoint")
 end
 
-local function ScanModel(Model: Instance, ServerParent?: Instance)
+local function ScanModel(Model: Instance, ServerParent: Instance?)
 	for _,Child in ipairs(Model:GetChildren()) do
 		local Properties = Properties[Child.ClassName]
 		

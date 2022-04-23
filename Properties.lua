@@ -46,6 +46,7 @@ local Properties = {
 }
 
 Properties.WedgePart = Properties.BasePart
+Properties.Part = Properties.BasePart
 
 Properties.Seat = Properties.BasePart
 Properties.SpawnLocation = Properties.BasePart

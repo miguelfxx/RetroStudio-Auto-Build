@@ -99,7 +99,7 @@ local function Start(AssetId: string | number, ModelName: string)
 	SetCheckpoint()
 	ScanModel(Model)
 	SetCheckpoint()
-	warn('Finished! Took ' .. StartTime - tick() .. ' seconds to create '.. tostring(CreatedInstances) .. ' instances.')
+	warn('Finished! Took ' .. tick() - StartTime .. ' seconds to create '.. tostring(CreatedInstances) .. ' instances.')
 	Model:Destroy()
 end
 

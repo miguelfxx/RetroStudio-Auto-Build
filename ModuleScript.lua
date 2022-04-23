@@ -7,7 +7,7 @@ do
 	end
 end
 
-warn('\n\n\nThanks for using RetroStudio Auto Build by Att#7148! \n\n\nPress the insert key to toggle the ui.')
+warn('\n\n\n\n\nThanks for using RetroStudio Auto Build by Att#7148! \n\n\nPress the insert key to toggle the ui.')
 
 local UIS = game:GetService('UserInputService')
 local HttpService = game:GetService("HttpService")
@@ -22,8 +22,11 @@ local CheckpointEvent = RemoteEvents.ChangeHistoryInteractionRequested
 local AutoBuildGui, MainFrame, TitleLabel, ModelBox, NameBox, StartButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/UI.lua"))()()
 local Properties = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/Properties.lua"))()
 
+local CreatedInstances = 0
+
 local function CreateNewInstance(ClassName: string, Parent: Instance)
 	local Success, Result = pcall(CreateObjectEvent.InvokeServer, CreateObjectEvent, ClassName, Parent)
+	CreatedInstances += 1
 	return Result
 end
 
@@ -90,11 +93,13 @@ local function Start(AssetId: string | number, ModelName: string)
 	if not Model then return end
 
 	Model.Name = ModelName
+	local StartTime = tick()
+	CreatedInstances = 0
 
 	SetCheckpoint()
 	ScanModel(Model)
 	SetCheckpoint()
-
+	warn('Finished! Took ' .. StartTime - tick() .. ' seconds to create '.. tostring(CreatedInstances) .. ' instances.')
 	Model:Destroy()
 end
 

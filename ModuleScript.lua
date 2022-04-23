@@ -1,5 +1,3 @@
-warn("test")
-
 local CoreGui = game:GetService("CoreGui")
 
 do
@@ -106,10 +104,8 @@ local function Init()
 	Start(AssetId, ModelName)
 end
 
-print(AutoBuildGui, MainFrame, TitleLabel, ModelBox, NameBox, StartButton)
-
 StartButton.Activated:Connect(Init)
 
-Start(9441839065 ,"PermaLobby")
+--Start(9441839065, "PermaLobby")
 
 return {}

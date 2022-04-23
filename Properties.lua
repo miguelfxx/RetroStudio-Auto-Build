@@ -294,7 +294,7 @@ Properties.BrickColorValue = Properties.StringValue
 
 Properties.Hint = Properties.Message
 
-for _,Properties2 in ipairs(Properties) do
+for _,Properties2 in pairs(Properties) do
 	table.insert(Properties2, "Name")
 end
 

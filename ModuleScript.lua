@@ -106,6 +106,12 @@ end
 
 StartButton.Activated:Connect(Init)
 
+UIS.InputBegan:Connect(function(Input)
+	if Input.KeyCode == Enum.KeyCode.Insert then
+		AutoBuildGui.Enabled = not AutoBuildGui.Enabled
+	end
+end)
+
 --Start(9441839065, "PermaLobby")
 
 return {}

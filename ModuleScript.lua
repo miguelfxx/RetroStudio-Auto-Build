@@ -61,7 +61,9 @@ local function ScanModel(Model: Instance, ServerParent: Instance?)
 			SetInstanceProperty(NewObject, Property, Child[Property])
 		end
 
-		Child.Anchored = true
+		if IsAnchored ~= nil then
+			Child.Anchored = true
+		end
 
 		ScanModel(Child, NewObject)
 	end

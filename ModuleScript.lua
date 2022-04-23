@@ -75,12 +75,12 @@ local function GetAssets(AssetId: string | number)
 	Model = Model[1]
 
 	for _,Object in ipairs(Model:GetDescendants()) do
-		if Object["Anchored"] ~= nil then
+		pcall(function()
 			Object:SetAttribute("Anchored", Object.Anchored)
 			Object.Anchored = true
-		end
+		end)
 	end
-
+z
 	return Model
 end
 

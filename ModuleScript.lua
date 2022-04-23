@@ -106,11 +106,11 @@ local function Start(AssetId: string | number, ModelName: string)
 	Model.Name = ModelName
 	local StartTime = tick()
 	CreatedInstances = 0
-
+	warn('\n\n\nStarting! This may take a while depending on the size of your model.\n\n\nPlease be patient thanks :3\n\n\n')
 	--SetCheckpoint()
 	ScanModel(Model)
 	--SetCheckpoint()
-	warn('Finished! Took ' .. tick() - StartTime .. ' seconds to create '.. tostring(CreatedInstances) .. ' instances.')
+	warn('\n\n\nFinished! Took ' .. tick() - StartTime .. ' seconds to create '.. tostring(CreatedInstances) .. ' instances.\n\n\n')
 	Model:Destroy()
 end
 

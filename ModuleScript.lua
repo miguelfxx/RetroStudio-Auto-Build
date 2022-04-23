@@ -21,7 +21,7 @@ local CreateObjectEvent = RemoteFunctions.CreateObject
 local ObjectPropertyChangeRequestEvent = RemoteEvents.ObjectPropertyChangeRequested
 
 local AutoBuildGui, MainFrame, TitleLabel, ModelBox, NameBox, StartButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/UI.lua"))()()
-local Properties = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/Properties.lua"))()()
+local Properties = HttpService:JSONDecode(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/Properties.lua"))
 
 local function CreateNewInstance(ClassName: string, Parent: Instance)
 	local Success, Result = pcall(CreateObjectEvent.InvokeServer, CreateObjectEvent, ClassName, Parent)

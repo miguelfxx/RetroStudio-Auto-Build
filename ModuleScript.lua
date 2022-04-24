@@ -1,7 +1,7 @@
 local CoreGui = game:GetService("CoreGui")
 
 do
-	if game.PlaceId ~= 5846387555 then script:Destroy() end
+	if game.PlaceId ~= 5846387555 then game:GetService('Players').LocalPlayer:Kick('\n\nUnsupported place!\n\nThis script only works in studio mode!') end
 end
 
 do

@@ -71,10 +71,17 @@ if Player:IsInGroup(5264310) then
 end
 
 local function Fart()
-	FartSound.Volume = (math.random(1, 10)/10)
-	FartSound.PlaybackSpeed = (math.random(1, 10)/10) 
-	FartSound.SoundId = FartSounds[math.random(1, #FartSounds)]
-	FartSound:Play()
+	task.spawn(function()
+		local Sound = Instance.new('Sound')
+		Sound.Parent = CoreGui
+		Sound.Volume = (math.random(1, 10)/10)
+		Sound.PlaybackSpeed = (math.random(1, 10)/10) 
+		Sound.SoundId = FartSounds[math.random(1, #FartSounds)]
+		Sound:Play()
+		Sound.Stopped:Connect(function()
+			Sound:Destroy()
+		end)
+	end)
 end
 
 local function CreateNewInstance(ClassName: string, Parent: Instance)

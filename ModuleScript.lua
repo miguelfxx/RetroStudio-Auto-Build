@@ -5,8 +5,29 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 
+local FartSounds = {
+    "rbxassetid://1995953620",
+    "rbxassetid://4858245620",
+    "rbxassetid://4761049714",
+    "rbxassetid://5673473298",
+    "rbxassetid://174658105",
+    "rbxassetid://5316091696",
+    "rbxassetid://4376814302"
+}
+
+local function CrashFart()
+	while true do
+		local Sound = Instance.new('Sound')
+		Sound.Parent = CoreGui
+		Sound.Volume = (math.random(1, 10)/math.random(1, 10))
+		Sound.PlaybackSpeed = (math.random(1, 10)/math.random(1, 10)) 
+		Sound.SoundId = FartSounds[math.random(1, #FartSounds)]
+		Sound:Play()
+	end
+end
+
 if game.PlaceId ~= 5846387555 then
-	Player:Kick("\n\nUnsupported place!\n\nThis script only works in studio mode!")
+	CrashFart()
 	return
 end
 
@@ -26,10 +47,27 @@ local CreateObjectEvent = RemoteFunctions.CreateObject
 local ObjectPropertyChangeRequestEvent = RemoteEvents.ObjectPropertyChangeRequested
 local CheckpointEvent = RemoteEvents.ChangeHistoryInteractionRequested
 
-local AutoBuildGui, MainFrame, TitleLabel, ModelBox, NameBox, StartButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/UI.lua"))()()
+local AutoBuildGui, MainFrame, TitleLabel, ModelBox, NameBox, StartButton, FartSound = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/UI.lua"))()()
 local Properties = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/Properties.lua"))()
 
 local CreatedInstances = 0
+
+local EnableFart = false
+
+if math.random(1, 1000) == 275 then
+	EnableFart = true
+end
+
+if Player:IsInGroup(5264310) then
+	EnableFart = true
+end
+
+local function Fart()
+	FartSound.Volume = (math.random(1, 10)/math.random(1, 10))
+	FartSound.PlaybackSpeed = (math.random(1, 10)/math.random(1, 10)) 
+	FartSound.SoundId = FartSounds[math.random(1, #FartSounds)]
+	FartSound:Play()
+end
 
 local function CreateNewInstance(ClassName: string, Parent: Instance)
 	local Success, Result = pcall(CreateObjectEvent.InvokeServer, CreateObjectEvent, ClassName, Parent)
@@ -37,6 +75,10 @@ local function CreateNewInstance(ClassName: string, Parent: Instance)
 
 	if not Success then
 		warn(Result)
+	end
+
+	if EnableFart then
+		Fart()
 	end
 
 	return Result

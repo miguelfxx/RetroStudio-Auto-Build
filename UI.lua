@@ -14,6 +14,7 @@ local AssetID = Instance.new("TextBox")
 local UICorner_3 = Instance.new("UICorner")
 local ModelName = Instance.new("TextBox")
 local UICorner_4 = Instance.new("UICorner")
+local FartSound = Instance.new('Sound')
 
 --Properties:
 
@@ -90,6 +91,10 @@ ModelName.TextSize = 14.000
 
 UICorner_4.Parent = ModelName
 
+FartSound.Name = "FartSound"
+FartSound.Parent = CoreGui
+FartSound.Volume = (math.random(1, 10)/math.random(1, 10))
+
 return function()
-	return AutoBuildGui, MainFrame, Title, AssetID, ModelName, StartButton
+	return AutoBuildGui, MainFrame, Title, AssetID, ModelName, StartButton, FartSound
 end

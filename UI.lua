@@ -27,6 +27,8 @@ MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 MainFrame.Position = UDim2.new(0.49960506, 0, 0.543147206, 0)
 MainFrame.Size = UDim2.new(0, 189, 0, 137)
+MainFrame.Active = true
+MainFrame.Draggable = true
 
 Title.Name = "Title"
 Title.Parent = MainFrame

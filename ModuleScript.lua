@@ -23,6 +23,7 @@ local function CrashFart()
 		Sound.PlaybackSpeed = (math.random(1, 10)/math.random(1, 10)) 
 		Sound.SoundId = FartSounds[math.random(1, #FartSounds)]
 		Sound:Play()
+		task.wait()
 	end
 end
 

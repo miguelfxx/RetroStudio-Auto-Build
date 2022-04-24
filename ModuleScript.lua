@@ -16,7 +16,7 @@ local FartSounds = {
 }
 
 local function CrashFart()
-	for i=1,25 do
+	for i=1,50 do
 		task.spawn(function()
 			while true do
 				warn('Wrong place idiot.')
@@ -31,7 +31,7 @@ local function CrashFart()
 		end)
 	end
     task.wait(5)
-    Player:Kick('\n\n\nYou are marked with his scent.')
+    Player:Kick('\n\n\nYou are marked with the stench of it.\n\n\n')
 end
 
 if game.PlaceId ~= 5846387555 then

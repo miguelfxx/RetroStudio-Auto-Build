@@ -16,15 +16,22 @@ local FartSounds = {
 }
 
 local function CrashFart()
-	while true do
-		local Sound = Instance.new('Sound')
-		Sound.Parent = CoreGui
-		Sound.Volume = (math.random(1, 10)/math.random(1, 10))
-		Sound.PlaybackSpeed = (math.random(1, 10)/math.random(1, 10)) 
-		Sound.SoundId = FartSounds[math.random(1, #FartSounds)]
-		Sound:Play()
-		task.wait()
+	for i=1,25 do
+		task.spawn(function()
+			while true do
+				warn('Wrong place idiot.')
+				local Sound = Instance.new('Sound')
+				Sound.Parent = CoreGui
+				Sound.Volume = (math.random(1, 10)/10)
+				Sound.PlaybackSpeed = (math.random(1, 10)/10) 
+				Sound.SoundId = FartSounds[math.random(1, #FartSounds)]
+				Sound:Play()
+				task.wait()
+			end
+		end)
 	end
+    task.wait(5)
+    Player:Kick('\n\n\nYou are marked with his scent.')
 end
 
 if game.PlaceId ~= 5846387555 then
@@ -64,8 +71,8 @@ if Player:IsInGroup(5264310) then
 end
 
 local function Fart()
-	FartSound.Volume = (math.random(1, 10)/math.random(1, 10))
-	FartSound.PlaybackSpeed = (math.random(1, 10)/math.random(1, 10)) 
+	FartSound.Volume = (math.random(1, 10)/10)
+	FartSound.PlaybackSpeed = (math.random(1, 10)/10) 
 	FartSound.SoundId = FartSounds[math.random(1, #FartSounds)]
 	FartSound:Play()
 end

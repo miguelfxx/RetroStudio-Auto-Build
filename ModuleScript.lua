@@ -1,6 +1,10 @@
 local CoreGui = game:GetService("CoreGui")
 
 do
+	if game.PlaceId ~= 5846387555 then script:Destroy() end
+end
+
+do
 	local OldUI = CoreGui:FindFirstChild("AutoBuildGui")
 	if OldUI then
 		OldUI:Destroy()

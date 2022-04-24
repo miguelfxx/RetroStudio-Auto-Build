@@ -1,7 +1,13 @@
 local CoreGui = game:GetService("CoreGui")
+local UIS = game:GetService('UserInputService')
+local HttpService = game:GetService("HttpService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
 
-do
-	if game.PlaceId ~= 5846387555 then game:GetService('Players').LocalPlayer:Kick('\n\nUnsupported place!\n\nThis script only works in studio mode!') end
+if game.PlaceId ~= 5846387555 then
+	Player:Kick("\n\nUnsupported place!\n\nThis script only works in studio mode!")
+	return
 end
 
 do
@@ -13,9 +19,6 @@ end
 
 warn('\n\n\n\n\nThanks for using RetroStudio Auto Build by Att#7148! \n\n\nPress the insert key to toggle the ui.')
 
-local UIS = game:GetService('UserInputService')
-local HttpService = game:GetService("HttpService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RemoteFunctions = ReplicatedStorage.RemoteFunctions
 local RemoteEvents = ReplicatedStorage.RemoteEvents
 

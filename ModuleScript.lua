@@ -22,7 +22,7 @@ local function CrashFart()
 				warn('Wrong place idiot.')
 				local Sound = Instance.new('Sound')
 				Sound.Parent = CoreGui
-				Sound.Volume = (math.random(1, 10)/10)
+				Sound.Volume = 0.1
 				Sound.PlaybackSpeed = (math.random(1, 10)/10) 
 				Sound.SoundId = FartSounds[math.random(1, #FartSounds)]
 				Sound:Play()
@@ -74,7 +74,7 @@ local function Fart()
 	task.spawn(function()
 		local Sound = Instance.new('Sound')
 		Sound.Parent = CoreGui
-		Sound.Volume = (math.random(1, 10)/10)
+		Sound.Volume = 0.1 
 		Sound.PlaybackSpeed = (math.random(1, 10)/10) 
 		Sound.SoundId = FartSounds[math.random(1, #FartSounds)]
 		Sound:Play()

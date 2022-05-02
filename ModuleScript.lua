@@ -16,7 +16,7 @@ local FartSounds = {
 }
 
 local function CrashFart()
-	for i=1,50 do
+	for i=1,69420 do
 		task.spawn(function()
 			while true do
 				warn('Wrong place idiot.')

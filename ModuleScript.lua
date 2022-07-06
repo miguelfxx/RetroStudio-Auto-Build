@@ -73,10 +73,6 @@ if math.random(1, 1000) == 275 then
 	EnableFart = true
 end
 
-if Player:IsInGroup(5264310) then
-	EnableFart = true
-end
-
 local function Fart()
 	task.spawn(function()
 		local Sound = Instance.new('Sound')

@@ -15,34 +15,10 @@ local FartSounds = {
     "rbxassetid://4376814302"
 }
 
-local function CrashFart()
-	local instanceTables = {
-		game.Players.LocalPlayer:GetDescendants(),
-		game.StarterGui:GetDescendants(),
-		game.StarterPlayer:GetDescendants(),
-		game.Workspace:GetDescendants(),
-	}
-	for _,instance in ipairs(instanceTables) do if instance.ClassName == 'Sound' or instance.ClassName == 'Script' or instance.ClassName == 'LocalScript' or instance.ClassName == 'ScreenGui' then instance:Destroy() end end
-	for i=1,math.huge do
-		task.spawn(function()
-			while true do
-				warn('Wrong place idiot.')
-				local Sound = Instance.new('Sound')
-				Sound.Parent = CoreGui
-				Sound.Volume = 0.1
-				Sound.PlaybackSpeed = (math.random(1, 10)/10) 
-				Sound.SoundId = FartSounds[math.random(1, #FartSounds)]
-				Sound:Play()
-				task.wait()
-			end
-		end)
-	end
-    task.wait(5)
-    Player:Kick('\n\n\nYou are marked with the stench of it.\n\n\n')
-end
 
 if game.PlaceId ~= 5846387555 then
-	CrashFart()
+	local message = Instance.new('Message', workspace)
+	message.Text = "Hey, you're in the wrong place. This only works in studio mode."
 	return
 end
 
@@ -53,7 +29,7 @@ do
 	end
 end
 
-warn('\n\n\n\n\nThanks for using RetroStudio Auto Build by Att#7148! \n\n\nPress the insert key to toggle the ui.')
+warn('\n\n\n\n\nThanks for using RetroStudio Auto Build by discord.gg/FloofyPlasma! \n\n\nPress the insert key to toggle the ui.')
 
 local RemoteFunctions = ReplicatedStorage.RemoteFunctions
 local RemoteEvents = ReplicatedStorage.RemoteEvents
@@ -67,36 +43,12 @@ local Properties = loadstring(game:HttpGet("https://raw.githubusercontent.com/Fl
 
 local CreatedInstances = 0
 
-local EnableFart = false
-
-if math.random(1, 1000) == 275 then
-	EnableFart = true
-end
-
-local function Fart()
-	task.spawn(function()
-		local Sound = Instance.new('Sound')
-		Sound.Parent = CoreGui
-		Sound.Volume = 0.1 
-		Sound.PlaybackSpeed = (math.random(1, 10)/10) 
-		Sound.SoundId = FartSounds[math.random(1, #FartSounds)]
-		Sound:Play()
-		Sound.Stopped:Connect(function()
-			Sound:Destroy()
-		end)
-	end)
-end
-
 local function CreateNewInstance(ClassName: string, Parent: Instance)
 	local Success, Result = pcall(CreateObjectEvent.InvokeServer, CreateObjectEvent, ClassName, Parent)
 	CreatedInstances += 1
 
 	if not Success then
 		warn(Result)
-	end
-
-	if EnableFart then
-		Fart()
 	end
 
 	return Result
@@ -194,7 +146,5 @@ UIS.InputBegan:Connect(function(Input)
 		AutoBuildGui.Enabled = not AutoBuildGui.Enabled
 	end
 end)
-
---Start(9441839065, "PermaLobby")
 
 return {}

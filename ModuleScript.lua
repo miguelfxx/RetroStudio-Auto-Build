@@ -2,6 +2,7 @@ local CoreGui = game:GetService("CoreGui")
 local UIS = game:GetService('UserInputService')
 local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local vu = game:GetService("VirtualUser")
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 
@@ -145,6 +146,12 @@ UIS.InputBegan:Connect(function(Input)
 	if Input.KeyCode == Enum.KeyCode.Insert then
 		AutoBuildGui.Enabled = not AutoBuildGui.Enabled
 	end
+end)
+
+Player.Idled:Connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   task.wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
 return {}

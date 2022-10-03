@@ -44,9 +44,9 @@ local Properties = loadstring(game:HttpGet("https://raw.githubusercontent.com/Fl
 
 local CreatedInstances = 0
 
-local function CreateNewInstance(ClassName: string, Parent: Instance)
+local function CreateNewInstance(ClassName, Parent)
 	local Success, Result = pcall(CreateObjectEvent.InvokeServer, CreateObjectEvent, ClassName, Parent)
-	CreatedInstances += 1
+	CreatedInstances = CreatedInstances + 1
 
 	if not Success then
 		warn(Result)
@@ -55,7 +55,7 @@ local function CreateNewInstance(ClassName: string, Parent: Instance)
 	return Result
 end
 
-local function SetInstanceProperty(Object: Instance, PropertyName: string, NewValue: any)
+local function SetInstanceProperty(Object, PropertyName, NewValue)
 	ObjectPropertyChangeRequestEvent:FireServer(Object, PropertyName, NewValue)
 end
 
@@ -63,7 +63,7 @@ local function SetCheckpoint()
 	CheckpointEvent:FireServer("AddCheckpoint")
 end
 
-local function ScanModel(Model: Instance, ServerParent: Instance?)
+local function ScanModel(Model, ServerParent)
 	if not ServerParent then
 		ServerParent = CreateNewInstance(Model.ClassName, workspace)
 		task.spawn(SetInstanceProperty, ServerParent, "Name", Model.Name)
@@ -101,7 +101,7 @@ local function ScanModel(Model: Instance, ServerParent: Instance?)
 	end
 end
 
-local function GetAssets(AssetId: string | number)
+local function GetAssets(AssetId)
 	local Model = game:GetObjects("rbxassetid://"..AssetId)
 
 	if not Model then return end
@@ -118,7 +118,7 @@ local function GetAssets(AssetId: string | number)
 	return Model
 end
 
-local function Start(AssetId: string | number, ModelName: string)
+local function Start(AssetId, ModelName)
 	local Model = GetAssets(AssetId)
 
 	if not Model then return end

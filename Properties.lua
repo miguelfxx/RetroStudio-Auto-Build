@@ -421,7 +421,7 @@ local Properties = {
 
 Properties.WedgePart = Properties.BasePart
 Properties.Part = Properties.BasePart
-Properties.CornerWedge = Properties.BasePart
+Properties.CornerWedgePart = Properties.BasePart
 
 Properties.Seat = Properties.BasePart
 Properties.Truss = Properties.BasePart

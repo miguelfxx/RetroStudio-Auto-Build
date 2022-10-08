@@ -428,6 +428,8 @@ Properties.Truss = Properties.BasePart
 Properties.VehicleSeat = Properties.BasePart
 Properties.SpawnLocation = Properties.BasePart
 Properties.CylinderMesh = Properties.Mesh
+Properties.BlockMesh = Properties.Mesh
+
 
 Properties.Vector3Value = Properties.StringValue
 Properties.NumberValue = Properties.StringValue

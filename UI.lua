@@ -94,7 +94,7 @@ UICorner_4.Parent = ModelName
 CompletedSound.Name = "CompletedSound"
 CompletedSound.Parent = CoreGui
 CompletedSound.Volume = 1
-CompletedSound.SoundId = 5035412139
+CompletedSound.SoundId = "rbxassetid://5035412139"
 
 return function()
 	return AutoBuildGui, MainFrame, Title, AssetID, ModelName, StartButton, CompletedSound

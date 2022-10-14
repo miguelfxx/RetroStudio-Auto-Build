@@ -6,17 +6,6 @@ local vu = game:GetService("VirtualUser")
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 
-local FartSounds = {
-    "rbxassetid://1995953620",
-    "rbxassetid://4858245620",
-    "rbxassetid://4761049714",
-    "rbxassetid://5673473298",
-    "rbxassetid://174658105",
-    "rbxassetid://5316091696",
-    "rbxassetid://4376814302"
-}
-
-
 if game.PlaceId ~= 5846387555 then
 	local message = Instance.new('Message', workspace)
 	message.Text = "Hey, you're in the wrong place. This only works in studio mode."
@@ -39,7 +28,7 @@ local CreateObjectEvent = RemoteFunctions.CreateObject
 local ObjectPropertyChangeRequestEvent = RemoteEvents.ObjectPropertyChangeRequested
 local CheckpointEvent = RemoteEvents.ChangeHistoryInteractionRequested
 
-local AutoBuildGui, MainFrame, TitleLabel, ModelBox, NameBox, StartButton, FartSound = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/UI.lua"))()()
+local AutoBuildGui, MainFrame, TitleLabel, ModelBox, NameBox, StartButton, CompletedSound = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/UI.lua"))()()
 local Properties = loadstring(game:HttpGet("https://raw.githubusercontent.com/FloofyPlasma/RetroStudio-Auto-Build/main/Properties.lua"))()
 
 local CreatedInstances = 0
@@ -57,10 +46,6 @@ end
 
 local function SetInstanceProperty(Object, PropertyName, NewValue)
 	ObjectPropertyChangeRequestEvent:FireServer(Object, PropertyName, NewValue)
-end
-
-local function SetCheckpoint()
-	CheckpointEvent:FireServer("AddCheckpoint")
 end
 
 local function ScanModel(Model, ServerParent)
@@ -130,6 +115,7 @@ local function Start(AssetId, ModelName)
 	--SetCheckpoint()
 	ScanModel(Model)
 	--SetCheckpoint()
+	CompletedSound:Play()
 	warn('\n\n\nFinished! Took ' .. tick() - StartTime .. ' seconds to create '.. tostring(CreatedInstances) .. ' instances.\n\n\n')
 	Model:Destroy()
 end
